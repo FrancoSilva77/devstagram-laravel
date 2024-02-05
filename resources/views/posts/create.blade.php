@@ -34,7 +34,7 @@
                 <div class="mb-5">
                     <label for="descripcion" class="mb-2 block uppercase text-gray-500 font-bold">Descripción</label>
                     <textarea id="descripcion" name="descripcion" placeholder="Descripcion de la publicacion"
-                        class="border p-3 w-full rounded-lg @error('descripcion') border-red-500
+                        class="border p-2 w-full rounded-lg @error('descripcion') border-red-500
                         @enderror">
                         {{ old('descripcion') }}</textarea>
                     @error('descripcion')

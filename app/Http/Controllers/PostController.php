@@ -8,64 +8,65 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    //
-    public function index(User $user)
-    {
-        $posts = Post::where('user_id', $user->id)->paginate(20);
+  public function __construct()
+  {
+    $this->middleware('auth')->except(['show', 'index']);
+  }
+  //
+  public function index(User $user)
+  {
+    $posts = Post::where('user_id', $user->id)->paginate(20);
 
-        return view('dashboard', [
-            'user' => $user,
-            'posts' => $posts
-        ]);
-    }
+    return view('dashboard', [
+      'user' => $user,
+      'posts' => $posts
+    ]);
+  }
 
-    public function create()
-    {
+  public function create()
+  {
 
-        return view('posts.create');
-    }
+    return view('posts.create');
+  }
 
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'titulo' => 'required|max:255',
-            'descripcion' => 'required',
-            'imagen' => 'required'
-        ]);
+  public function store(Request $request)
+  {
+    $this->validate($request, [
+      'titulo' => 'required|max:255',
+      'descripcion' => 'required',
+      'imagen' => 'required'
+    ]);
 
-        // Post::create([
-        //     'titulo' => $request->titulo,
-        //     'descripcion' => $request->descripcion,
-        //     'imagen' => $request->imagen,
-        //     'user_id' => auth()->user()->id,
-        // ]);
+    // Post::create([
+    //     'titulo' => $request->titulo,
+    //     'descripcion' => $request->descripcion,
+    //     'imagen' => $request->imagen,
+    //     'user_id' => auth()->user()->id,
+    // ]);
 
-        // * Forma 2 de guardar registros
-        // $post = new Post;
-        // $post->titulo = $request->titulo;
-        // $post->descripcion = $request->descripcion;
-        // $post->imagen = $request->imagen;
-        // $post->user_id = auth()->user()->id;
-        // $post->save();
+    // * Forma 2 de guardar registros
+    // $post = new Post;
+    // $post->titulo = $request->titulo;
+    // $post->descripcion = $request->descripcion;
+    // $post->imagen = $request->imagen;
+    // $post->user_id = auth()->user()->id;
+    // $post->save();
 
-        $request->user()->posts()->create([
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
-            'imagen' => $request->imagen,
-            'user_id' => auth()->user()->id,
-        ]);
+    $request->user()->posts()->create([
+      'titulo' => $request->titulo,
+      'descripcion' => $request->descripcion,
+      'imagen' => $request->imagen,
+      'user_id' => auth()->user()->id,
+    ]);
 
-        return redirect()->route('posts.index', auth()->user()->username);
-    }
+    return redirect()->route('posts.index', auth()->user()->username);
+  }
 
-    public function show(User $user,Post $post)
-    {
-        return view('posts.show', [
-            'post' => $post
-        ]);
-    }
+  public function show(User $user, Post $post)
+  {
+    return view('posts.show', [
+      'post' => $post,
+      'user' => $user
+    ]);
+  }
 }

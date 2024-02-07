@@ -7,7 +7,6 @@
     @stack('styles')
     <title>DevStagram | @yield('titulo')</title>
     @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     @livewireStyles
 </head>

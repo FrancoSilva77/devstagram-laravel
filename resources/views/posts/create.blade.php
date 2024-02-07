@@ -10,8 +10,9 @@
 
 @section('contenido')
     <div class="md:flex md:items-center">
+        @vite('resources/js/app.js')
         <div class="md:w-1/2 px-10">
-            <form action="{{ route('imagenes.store') }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form id="dropzone" action="{{ route('imagenes.store') }}" method="POST" enctype="multipart/form-data"
                 class="dropzone border-dashed border-2 w-full h-96 rounded flex flex-col justify-center items-center">
                 @csrf
             </form>
@@ -43,7 +44,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <input type="hidden" name="imagen" value="{{old('imagen')}}">
+                    <input type="hidden" name="imagen" value="{{ old('imagen') }}">
                     @error('imagen')
                         <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
                     @enderror
